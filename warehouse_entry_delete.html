@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xóa Phiếu Nhập Kho</title>
+    <style>
+        /* Thêm CSS nếu cần */
+    </style>
+</head>
+<body>
+    <h1>Xóa Phiếu Nhập Kho</h1>
+    <p>Bạn có chắc chắn muốn xóa phiếu nhập kho này không?</p>
+    <p>Nhà Cung Cấp: {{ entry.supplier }}</p>
+    <p>Tổng Số Lượng: {{ entry.total_quantity }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Xóa</button>
+    </form>
+    <a href="{% url 'warehouse_entry_list' %}">Quay lại danh sách</a>
+</body>
+</html>

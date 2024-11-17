@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Phiếu Nhập Kho</title>
+    <style>
+        /* Thêm CSS nếu cần */
+    </style>
+</head>
+<body>
+    <h1>Sửa Phiếu Nhập Kho</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <h3>Chọn sản phẩm:</h3>
+        {% for product in products %}
+            <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                <input type="checkbox" value="{{ product.id }}" onchange="toggleQuantityInput(this)">
+                {{ product.name }}
+                <input type="number" id="quantity_{{ product.id }}" name="quantity_{{ product.id }}" min="0" value="0" class="quantity-input" oninput="calculateTotalQuantity()">
+            </label>
+        {% endfor %}
+
+        <button type="submit">Cập nhật</button>
+    </form>
+
+    <a href="{% url 'warehouse_entry_list' %}">Quay lại danh sách</a>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action 2 - Sales by City</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .content {
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .chart-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .download-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sales Data Analysis</h1>
+    </header>
+    <div class="container">
+        <div class="content">
+            <h2>Sales by City</h2>
+            {% if error_message %}
+                <p class="error">{{ error_message }}</p>
+            {% else %}
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ sales_chart }}" alt="Sales by City Chart">
+                </div>
+                <h3>Sales Data:</h3>
+                <ul>
+                    {% for city, sales in sales.items %}
+                        <li>{{ city }}: {{ sales|floatformat:2 }} USD</li>
+                    {% endfor %}
+                </ul>
+                <a href="?download_image=1">Download Chart as PNG</a>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

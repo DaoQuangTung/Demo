@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Hình Ảnh Sản Phẩm</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Thêm Hình Ảnh cho Sản Phẩm: {{ product.name }}</h2>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Thêm Hình Ảnh</button>
+        </form>
+        
+        <a href="{% url 'product_management' %}" class="btn btn-secondary mt-3">Quay lại</a>
+        
+        <h3 class="mt-5">Các Hình Ảnh Hiện Có:</h3>
+        <div class="row">
+            {% for image in images %}
+                <div class="col-md-3 mt-3">
+                    <img src="{{ image.image.url }}" class="img-thumbnail" alt="Hình ảnh của sản phẩm">
+                </div>
+            {% empty %}
+                <p>Chưa có hình ảnh nào cho sản phẩm này.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

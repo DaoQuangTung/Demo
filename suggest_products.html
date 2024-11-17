@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm Gợi Ý</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: white;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .total-products {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gợi Ý Sản Phẩm</h1>
+    <form method="GET" action="{% url 'suggest_products' %}">
+        <input type="text" name="product_name" placeholder="Nhập tên sản phẩm cần gợi ý" required>
+        <input type="submit" value="Gợi ý">
+    </form>
+
+    <p class="total-products">Tổng số sản phẩm trong bảng: {{ total_products }}</p>
+
+    {% if suggestions %}
+        <h2>Gợi ý sản phẩm:</h2>
+        <ul>
+            {% for product in suggestions %}
+                <li>
+                    Tên sản phẩm: {{ product.Product }} <br>
+                    Tổng số lượng: {{ product.Total_Quantity }} <br>
+                    Tổng doanh thu: {{ product.Total_Sales|floatformat:2 }} VNĐ
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Không tìm thấy sản phẩm nào phù hợp.</p>
+    {% endif %}
+</body>
+</html>

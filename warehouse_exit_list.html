@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Xuất Kho</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2980B9;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #2980B9;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #21618C;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2980B9;
+            color: white;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        .message {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Danh Sách Xuất Kho</h1>
+    <a href="{% url 'warehouse_exit' %}">Xuất Kho Mới</a>
+    
+    {% if messages %}
+        <div class="message">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Ngày Xuất</th>
+                <th>Nhà Cung Cấp</th>
+                <th>Tổng Số Lượng</th>
+                <th>Sản Phẩm</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exit in exits %}
+                <tr>
+                    <td>{{ exit.exit_date }}</td>
+                    <td>{{ exit.supplier.name }}</td>
+                    <td>{{ exit.total_quantity }}</td>
+                    <td>
+                        <ul>
+                            {% for exit_product in exit.exit_products.all %}
+                                <li>{{ exit_product.product.name }}: {{ exit_product.quantity }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{% url 'warehouse_exit_edit' exit.id %}">Sửa</a>
+                            <form action="{% url 'warehouse_exit_delete' exit.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa xuất kho này không?');" style="background-color: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Xóa</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Không có dữ liệu xuất kho nào.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

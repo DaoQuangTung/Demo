@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Management System</title>
+    <style>
+        /* Reset cơ bản */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .header-background {
+            background-image: url();
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            background-color: rgba(101, 118, 135, 0.8);
+            color: white;
+            padding: 20px;
+            z-index: 2;
+            text-align: center;
+            height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .header-content.fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            left: 0;
+            z-index: 999;
+        }
+
+        .navbar {
+            background-color: #35495E;
+            padding: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+            padding: 10px 20px;
+            background-color: #6C8EBF;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
+        }
+
+        .navbar ul li:hover {
+            background-color: #1ABC9C;
+            transform: scale(1.05);
+        }
+
+        .navbar ul li a {
+            color: #ECF0F1;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            font-weight: bold;
+        }
+
+        .navbar ul li a:hover {
+            color: #FFFFFF;
+        }
+
+        .dashboard {
+            max-width: 95%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(146, 144, 142, 0.276);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .function-overview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .function-box {
+            background-color: #A9CCE3;
+            padding: 2%;
+            width: 30%;
+            margin-bottom: 5%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .function-box h3 {
+            color: #2C3E50;
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 50px;
+        }
+
+        .function-box p {
+            margin-bottom: 10px;
+            color: #5D6D7E;
+            margin-top: 5%;
+        }
+
+        .button {
+            padding: 10px 15px;
+            background-color: #2980B9;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #21618C;
+        }
+
+        .login-logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .login-logout a {
+            color: white;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+
+        .login-logout a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #FFFFFF;
+            margin-top: 30px;
+        }
+
+        .function-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .function-box .button {
+            opacity: 0;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .function-box:hover .button {
+            opacity: 1;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var headerContent = document.getElementById('header-content');
+            var headerHeight = document.querySelector('.header').offsetHeight;
+
+            if (window.scrollY > headerHeight - 100) {
+                headerContent.classList.add('fixed');
+            } else {
+                headerContent.classList.remove('fixed');
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-background"></div>
+        <div class="header-content">
+            <h1>Nhóm 6 - Thực tập cơ sở ngành</h1>
+            <div class="login-logout">
+                <a href="{% url 'login' %}"> Đăng nhập</a> | 
+                <a href="{% url 'register' %}"> Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navbar with Functions -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'product_management' %}"> Quản lý Sản phẩm</a></li>
+            <li><a href="{% url 'location_management' %}"> Quản lý Danh mục sản phẩm</a></li>
+            <li><a href="{% url 'upload_files' %}"> Báo cáo Doanh thu</a></li>
+            <li><a href="{% url 'supplier_management' %}"> Quản lý Nhà cung cấp</a></li>
+            <li><a href="{% url 'warehouse_entry_list' %}"> Quản lý Nhập kho</a></li>
+            <li><a href="{% url 'warehouse_exit_list' %}"> Quản lý Xuất kho</a></li> <!-- Thêm đường dẫn cho xuất kho -->
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+        <h2>Chức năng quản lý</h2>
+        <section class="function-overview">
+            <div class="function-box">
+                <h3>Quản lý Sản phẩm</h3>
+                <a href="{% url 'product_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Danh mục sản phẩm</h3>
+                <a href="{% url 'location_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Báo cáo Doanh thu</h3>
+                <a href="{% url 'upload_files' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Nhà cung cấp</h3>
+                <a href="{% url 'supplier_management' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Nhập kho</h3>
+                <a href="{% url 'warehouse_entry_list' %}" class="button">Xem chi tiết</a>
+            </div>
+            <div class="function-box">
+                <h3>Quản lý Xuất kho</h3>
+                <a href="{% url 'warehouse_exit_list' %}" class="button">Xem chi tiết</a> <!-- Thêm nút cho xuất kho -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Warehouse Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!-- warranty_list.html -->
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Bảo Hành</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Danh Sách Bảo Hành</h2>
+        <a href="{% url 'add_warranty' %}" class="btn btn-success mb-3">Thêm Bảo Hành</a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Sản Phẩm</th>
+                    <th>Thời Gian Bảo Hành (Tháng)</th>
+                    <th>Loại Bảo Hành</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warranty in warranties %}
+                <tr>
+                    <td>{{ warranty.product.name }}</td>
+                    <td>{{ warranty.warranty_period }}</td>
+                    <td>{{ warranty.warranty_type }}</td>
+                    <td>
+                        <a href="{% url 'edit_warranty' warranty.id %}" class="btn btn-warning btn-sm">Sửa</a>
+                        <a href="{% url 'delete_warranty' warranty.id %}" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Chưa có bảo hành nào.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'trangchu' %}" class="btn btn-secondary mt-3">Quay lại Trang Chủ</a>
+    </div>
+</body>
+</html>

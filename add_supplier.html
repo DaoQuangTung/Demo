@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Nhà Cung Cấp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Thêm Nhà Cung Cấp</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Tên Nhà Cung Cấp</label>
+                <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa Chỉ</label>
+                <textarea class="form-control" name="address" id="address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="phone">Số Điện Thoại</label>
+                <input type="text" class="form-control" name="phone" id="phone" required>
+                {% if form.phone.errors %}
+                    <div class="text-danger">
+                        {{ form.phone.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm</button>
+            <a href="{% url 'supplier_management' %}" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+</body>
+</html>

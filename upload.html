@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        /* Header */
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        header img {
+            margin-left: 10px;
+            width: 100px;
+            height: 100px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            margin-left: 20px;
+        }
+
+        /* Animation for fade-in effect */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Navigation */
+        nav {
+            background: #34495e;
+            padding: 10px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            transform: translateY(-50px);
+            opacity: 0;
+            animation: slideIn 0.5s forwards ease-in-out;
+        }
+
+        nav ul li:nth-child(1) { animation-delay: 0.1s; }
+        nav ul li:nth-child(2) { animation-delay: 0.2s; }
+        nav ul li:nth-child(3) { animation-delay: 0.3s; }
+        nav ul li:nth-child(4) { animation-delay: 0.4s; }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 5px;
+            border: 2px solid transparent;
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            transition: color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00b3ff;
+            transform: scale(1.2);
+            border-color: #00b3ff;
+        }
+
+        /* Slide-in animation */
+        @keyframes slideIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Main container */
+        .container {
+            width: 80%;
+            margin: 100px auto 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        /* Content section */
+        .content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .content:hover {
+            transform: scale(1.02);
+        }
+
+        .upload-form {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .upload-form h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .upload-form form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-form input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .upload-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background: #ecf0f1;
+            color: #333;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+
+        footer a {
+            color: #2980b9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #3498db;
+        }
+
+        footer .social-icons {
+            margin: 20px 0;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        footer .social-icons img {
+            width: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        footer .social-icons img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="UploadLogo.png" alt="Logo">
+        <h1>Upload CSV Files</h1>
+    </header>
+
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#upload">Upload</a></li>
+            <li><a href="#reports">Reports</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="content upload-form">
+            <h1>Upload CSV Files</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="csv_files" multiple>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CSV Upload Inc. | All Rights Reserved</p>
+        <div class="social-icons">
+            <a href="#"><img src="#" alt="Facebook"></a>
+            <a href="#"><img src="#" alt="Twitter"></a>
+            <a href="#"><img src="#" alt="Instagram"></a>
+        </div>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

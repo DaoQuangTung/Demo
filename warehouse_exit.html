@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuất Kho</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2980B9;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        input[type="number"] {
+            margin-left: 10px;
+            width: 50px;
+        }
+        input[type="date"] {
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+        }
+        button {
+            background-color: #2980B9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #21618C;
+        }
+        .message {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Xuất Kho</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+
+        <!-- Thêm trường chọn nhà cung cấp -->
+        <label for="supplier">Chọn nhà cung cấp:</label>
+        <select id="supplier" name="supplier" required>
+            {% for supplier in suppliers %}
+                <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="exit_date">Chọn ngày xuất:</label>
+        <input type="date" id="exit_date" name="exit_date" required>
+        
+        <h3>Chọn sản phẩm:</h3>
+        {% for product in products %}
+            <label>
+                {{ product.name }}
+                <input type="number" name="quantity_{{ product.id }}" min="0" value="0">
+            </label>
+        {% endfor %}
+        <button type="submit">Lưu Xuất Kho</button>
+    </form>
+    {% if messages %}
+        <div class="message">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>

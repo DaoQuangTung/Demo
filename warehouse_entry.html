@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Phiếu Nhập Kho</title>
+    <style>
+        .quantity-input {
+            display: none;
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        function toggleQuantityInput(checkbox) {
+            const quantityInput = document.getElementById('quantity_' + checkbox.value);
+            quantityInput.style.display = checkbox.checked ? 'inline-block' : 'none';
+            calculateTotalQuantity();
+        }
+
+        function calculateTotalQuantity() {
+            let total = 0;
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            quantityInputs.forEach(input => {
+                if (input.style.display !== 'none') {
+                    total += parseInt(input.value) || 0;
+                }
+            });
+            document.getElementById('total_quantity').value = total;
+        }
+    </script>
+</head>
+<body>
+    <h1>Thêm Phiếu Nhập Kho</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Trường chọn ngày nhập kho -->
+        <h3>Chọn ngày nhập kho:</h3>
+        <input type="date" name="entry_date" required>
+        
+        <!-- Trường chọn nhà cung cấp -->
+        <h3>Chọn nhà cung cấp:</h3>
+        <select name="supplier" required>
+            <option value="">--- Chọn nhà cung cấp ---</option>
+            {% for supplier in suppliers %}
+                <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+            {% endfor %}
+        </select>
+
+        
+
+        <h3>Chọn sản phẩm:</h3>
+        {% for product in products %}
+            <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                <input type="checkbox" value="{{ product.id }}" onchange="toggleQuantityInput(this)">
+                {{ product.name }}
+                <input type="number" id="quantity_{{ product.id }}" name="quantity_{{ product.id }}" min="0" value="0" class="quantity-input" oninput="calculateTotalQuantity()">
+            </label>
+        {% endfor %}
+
+        <h3>Tổng Số Lượng:</h3>
+        <input type="number" id="total_quantity" name="total_quantity" value="0" readonly>
+        
+        <button type="submit">Lưu Phiếu Nhập Kho</button>
+    </form>
+
+    {% if messages %}
+        <div class="messages">
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</body>
+</html>

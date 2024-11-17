@@ -1,0 +1,22 @@
+<!-- add_warranty.html -->
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Bảo Hành</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Thêm Bảo Hành</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Lưu Bảo Hành</button>
+            <a href="{% url 'warranty_list' %}" class="btn btn-secondary">Hủy</a>
+        </form>
+    </div>
+</body>
+</html>
